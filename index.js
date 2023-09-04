@@ -6,8 +6,9 @@ const {
 const express = require('express');
 const app = express();
 const multer = require('multer');
-
 const port = 3000;
+app.use(express.static('public'))
+
 
 
 //checking environmet
@@ -18,6 +19,10 @@ const blobServiceClient = BlobServiceClient.fromConnectionString(process.env.CON
 //multer config
 const storage = multer.memoryStorage(); // Store the file in memory
 const upload = multer({ storage: storage });
+
+app.get('/', function (req, res) {
+    res.sendFile(__dirname + '/views/index.html')
+})
 
 app.post('/upload', upload.single('image'), function async (req, res) {
     
